@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<!--指定为中文-中国-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+    <link rel="stylesheet" href="../resources/plugins/editormd/css/editormd.min.css" />
+    <link rel="stylesheet" href="../resources/plugins/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../resources/plugins/editormd/css/editormd.preview.css" />
+    <script type="text/javascript" src="../resources/js/jquery.min.js"></script>
+    <script src="../resources/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <!--<link rel="stylesheet" href="css/style.css" />-->
+
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        .editormd-html-preview {
+            width: 90%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<!--导航-->
+
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Brand</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                        <li><a href="#">Link</a></li>
+
+                    </ul>
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">Link</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+
+
+<!--正文-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-1 hidden-xs hidden-md hidden-sm">.col-md-1</div>
+        <div class="col-lg-9">
+            <div id="test-editormd-view">
+                <textarea style="display:none;" name="test-editormd-markdown-doc">###Hello world!</textarea>
+            </div>
+            <div id="test-editormd-view2">
+                <textarea id="append-test" style="display:none;">
+                </textarea>
+            </div>
+        </div>
+        <div class="col-lg-2 hidden-xs hidden-md hidden-sm">.col-md-1</div>
+
+    </div>
+</div>
+
+
+
+
+<script src="../resources/plugins/editormd/lib/marked.min.js"></script>
+<script src="../resources/plugins/editormd/lib/prettify.min.js"></script>
+
+<script src="../resources/plugins/editormd/lib/raphael.min.js"></script>
+<script src="../resources/plugins/editormd/lib/underscore.min.js"></script>
+<script src="../resources/plugins/editormd/lib/sequence-diagram.min.js"></script>
+<script src="../resources/plugins/editormd/lib/flowchart.min.js"></script>
+<script src="../resources/plugins/editormd/lib/jquery.flowchart.min.js"></script>
+
+<script src="../resources/plugins/editormd/editormd.js"></script>
+<script>
+    $(function(){
+ /*       $.ajax({
+            type: "get",
+            url: "/article/findById?id=1",
+            success: function(response){
+
+               $("#article").html(response.data.articleContent);
+
+            }
+        });
+*/
+
+        var testEditormdView, testEditormdView2;
+
+        $.get("/article/findById?id=1", function(markdown) {
+
+            testEditormdView = editormd.markdownToHTML("test-editormd-view", {
+                markdown        : markdown.data.articleContent ,//+ "\r\n" + $("#append-test").text(),
+                //htmlDecode      : true,       // 开启 HTML 标签解析，为了安全性，默认不开启
+                htmlDecode      : "style,script,iframe",  // you can filter tags decode
+                //toc             : false,
+                tocm            : true,    // Using [TOCM]
+                //tocContainer    : "#custom-toc-container", // 自定义 ToC 容器层
+                //gfm             : false,
+                //tocDropdown     : true,
+                // markdownSourceCode : true, // 是否保留 Markdown 源码，即是否删除保存源码的 Textarea 标签
+                emoji           : true,
+                taskList        : true,
+                tex             : true,  // 默认不解析
+                flowChart       : true,  // 默认不解析
+                sequenceDiagram : true,  // 默认不解析
+            });
+
+            //console.log("返回一个 jQuery 实例 =>", testEditormdView);
+
+            // 获取Markdown源码
+            //console.log(testEditormdView.getMarkdown());
+
+            //alert(testEditormdView.getMarkdown());
+        });
+
+        testEditormdView2 = editormd.markdownToHTML("test-editormd-view2", {
+            htmlDecode      : "style,script,iframe",  // you can filter tags decode
+            emoji           : true,
+            taskList        : true,
+            tex             : true,  // 默认不解析
+            flowChart       : true,  // 默认不解析
+            sequenceDiagram : true,  // 默认不解析
+        });
+
+
+    })
+</script>
+</body>
+</html>
