@@ -13,6 +13,9 @@ spring:
     cache: false
   resources:
     static-locations: classpath:/META-INF/resources/,classpath:/resources/, classpath:/static/,classpath:/public/,file:d:\upload\
+  jackson:
+    date-format: yyyy-MM-dd hh:mm:ss
+
 
 
 mybatis-plus:
