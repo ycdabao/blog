@@ -23,12 +23,13 @@
             width: 90%;
             margin: 0 auto;
         }
+        body { padding-top: 70px; background-color: #f9f9f9}
     </style>
 </head>
 <body>
 <!--导航-->
 
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-default navbar-fixed-top " style="background-color: #ffffff">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -63,19 +64,19 @@
 
 
 <!--正文-->
-<div class="container-fluid">
+<div class="container-fluid" >
     <div class="row">
-        <div class="col-lg-1 hidden-xs hidden-md hidden-sm">.col-md-1</div>
-        <div class="col-lg-9">
+        <div class="col-lg-1 hidden-xs hidden-md hidden-sm"></div>
+        <div class="col-lg-9  ">
             <div id="test-editormd-view">
                 <textarea style="display:none;" name="test-editormd-markdown-doc">###Hello world!</textarea>
             </div>
-            <div id="test-editormd-view2">
+            <div id="test-editormd-view2" class="img-rounded img-thumbnail">
                 <textarea id="append-test" style="display:none;">
                 </textarea>
             </div>
         </div>
-        <div class="col-lg-2 hidden-xs hidden-md hidden-sm">.col-md-1</div>
+        <div class="col-lg-2 hidden-xs hidden-md hidden-sm"></div>
 
     </div>
 </div>
@@ -108,7 +109,7 @@
 
         var testEditormdView, testEditormdView2;
 
-        $.get("/article/findById?id=1", function(markdown) {
+        $.get("/article/findById?id=2", function(markdown) {
 
             testEditormdView = editormd.markdownToHTML("test-editormd-view", {
                 markdown        : markdown.data.articleContent ,//+ "\r\n" + $("#append-test").text(),
