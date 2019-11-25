@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<!--指定为中文-中国-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="../resources/plugins/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../resources/plugins/elementui/index.css">
+    <link rel="stylesheet" href="../resources/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../resources/css/style.css">
+    <!-- 引入样式 -->
+    <script type="text/javascript" src="../resources/js/jquery.min.js"></script>
+    <script src="../resources/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../resources/js/vue.js"></script>
+    <script src="../resources/plugins/elementui/index.js"></script>
+    <script src="../resources/js/axios-0.18.0.js"></script>
+
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+
+        body.reader-black-font, body.reader-black-font .history-mode .view-area, body.reader-black-font .history-mode .view-area pre, body.reader-black-font .main .kalamu-area, body.reader-black-font .main .markdown .text, body.reader-black-font input, body.reader-black-font select, body.reader-black-font textarea {
+            font-family: -apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
+        }
+
+        body { padding-top: 70px;}
+        .note-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .note-list li {
+            position: relative;
+            width: 100%;
+            margin: 0 0 15px;
+            padding: 15px 2px 20px 0;
+            border-bottom: 1px solid #f0f0f0;
+            word-wrap: break-word;
+        }
+
+        li {
+            line-height: 20px;
+        }
+
+        .note-list .title:visited {
+            color: #969696;
+        }
+
+        .note-list .title {
+            margin: -7px 0 4px;
+            display: inherit;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+        .note-list .title:visited {
+            color: #969696;
+        }
+        a {
+            cursor: pointer;
+        }
+        a, body {
+            color: #333;
+        }
+
+        a {
+            background-color: transparent;
+        }
+
+        .note-list .abstract {
+            margin: 0 0 8px;
+            font-size: 13px;
+            line-height: 24px;
+            color: #999;
+        }
+
+        p {
+            margin: 0 0 10px;
+        }
+        *, :after, :before {
+            box-sizing: border-box;
+        }
+
+        p {
+            display: block;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        .note-list .meta {
+            padding-right: 0!important;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 20px;
+        }
+
+        .note-list .meta span {
+            margin-right: 10px;
+            color: #b4b4b4;
+        }
+        .jsd-meta {
+            color: #ea6f5a!important;
+        }
+
+        .note-list .meta a, .note-list .meta a:hover {
+            transition: .1s ease-in;
+            -webkit-transition: .1s ease-in;
+            -moz-transition: .1s ease-in;
+            -o-transition: .1s ease-in;
+            -ms-transition: .1s ease-in;
+        }
+
+        .note-list .meta a {
+            margin-right: 10px;
+            color: #b4b4b4;
+        }
+
+        .iconfont {
+            font-family: iconfont!important;
+            font-size: inherit;
+            font-style: normal;
+            font-weight: 400!important;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--导航-->
+
+    <nav class="navbar navbar-default navbar-fixed-top " style="background-color: #ffffff">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Brand</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                            <li><a href="#">Link</a></li>
+
+                        </ul>
+                        <form class="navbar-form navbar-left" role="search">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search">
+                            </div>
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#">Link</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+
+
+    <!--正文-->
+    <div class="container-fluid" >
+        <div class="row">
+            <div class="col-lg-2 hidden-xs hidden-md hidden-sm"></div>
+            <div class="col-lg-7  " style="background-color: #ffffff;">
+                <div id="list-container">
+                    <ul class="note-list">
+                        <li id="note-41080202" data-note-id="41080202" class="" v-for="item in dataList">
+                            <div class="content">
+                                <a class="title" target="_self" :href="getGoodsHref(item.articleId )">
+                                    <span v-text='item.articleTitle'></span></a>
+                                <p class="abstract">
+                                    <span v-text='item.articleSummary'></span>
+
+                                </p>
+                                <div class="meta">
+    <span class="jsd-meta">
+      <i class="iconfont ic-paid1"></i> 23.5
+    </span>
+                                    <a class="nickname" target="_blank" href="/u/9a4c36f116e3">花无少年i</a>
+                                    <a target="_blank" href="/p/e191149e4fa2#comments">
+                                        <i class="iconfont ic-list-comments"></i> {{item.articleCommentCount}}
+                                    </a>      <span><i class="iconfont ic-list-like"></i> {{item.articleLikeCount}}</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="pagination-container" >
+                    <el-pagination
+                            class="pagiantion"
+                            @current-change="handleCurrentChange"
+                            :current-page="pagination.currentPage"
+                            :page-size="pagination.pageSize"
+                            layout="total, prev, pager, next, jumper"
+                            :total="pagination.total">
+                    </el-pagination>
+                </div>
+            </div>
+            <div class="col-lg-3 hidden-xs hidden-md hidden-sm">
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    var vue = new Vue({
+        el:"#app",
+        data:{
+            dataList:[],
+            pagination: {//分页相关模型数据
+                currentPage: 1,//当前页码
+                pageSize:10,//每页显示的记录数
+                total:0,//总记录数
+                article:null//查询条件
+            }
+        },
+        methods:{
+            pageQuery(){
+                var params={
+                    currentPage:this.pagination.currentPage,
+                    pageSize:this.pagination.pageSize,
+                    object:this.pagination.article
+                }
+                axios.post("/article/pageQuery",params).then((response)=>{
+                    if(response.data.flag){
+                        this.dataList = response.data.data.rows;
+
+                        this.pagination.total=response.data.data.total;
+                    }else{
+                        this.$message.error(response.data.message);
+                    }
+
+                })
+            },
+            handleCurrentChange(page){
+                this.pagination.currentPage=page;
+            },
+            getGoodsHref:function(val){
+                return 'article.html?id='+val
+            }
+        },
+        created(){
+            this.pageQuery();
+        }
+    })
+</script>
+</body>
+</html>
