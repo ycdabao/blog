@@ -44,6 +44,18 @@ public class ArticleController {
         }
     }
 
+
+    @GetMapping("findByCategoryId")
+    public Result findByCategoryId(Long categoryId){
+        try {
+            Article article = articleService.findByCategoryId(categoryId);
+            return new Result(true,Message.ARTICLE_QUERY_SUCCESS,article);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,Message.ARTICLE_QUERY_FAIL);
+        }
+    }
+
     @PostMapping("pageQuery")
     public Result pageQuery(@RequestBody QueryPageBean<Article> queryPageBean){
         try {

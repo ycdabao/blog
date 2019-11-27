@@ -65,4 +65,10 @@ public class ArticleServiceImpl implements ArticleService {
 
         return article;
     }
+
+
+    @Override
+    public Article findByCategoryId(Long categoryId) {
+        return articleMapper.findByCategoryId(categoryId);
+    }
 }

@@ -26,4 +26,7 @@ public interface ArticleService {
      * @return
      */
     public PageResult findByCondition(QueryPageBean<Article> queryPageBean);
+
+
+    public Article findByCategoryId(Long categoryId);
 }

@@ -21,7 +21,7 @@ public interface CategoryService {
      * 获取分类树
      * @return
      */
-    public List<CategoryTree> getCategoryTree();
+    public List<CategoryTree> getCategoryTree(Long parentId);
 
     /**
      * 添加新分类

@@ -40,11 +40,11 @@ public class CategoryServiceImpl implements CategoryService {
 
 
     @Override
-    public List<CategoryTree> getCategoryTree() {
+    public List<CategoryTree> getCategoryTree(Long parentId) {
 
         List<Category> categories = categoryMapper.selectList(null);
 
-        return buildTree(categories,null);
+        return buildTree(categories,parentId);
     }
 
 

@@ -2,6 +2,7 @@ package com.imodou.blog.mapper;
 
 import com.imodou.blog.pojo.Article;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * <p>
@@ -13,4 +14,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface ArticleMapper extends BaseMapper<Article> {
 
+    @Select("select ta.* from t_article ta,t_article_category tac where ta.article_id=tac.article_id and tac.category_id=#{categoryId}")
+    public Article findByCategoryId(Long categoryId);
 }

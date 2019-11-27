@@ -35,11 +35,14 @@ public class CategoryController {
 
     }
 
-
+    /**
+     * 获取分类
+     * @return
+     */
     @RequestMapping("/getCategoryTree")
-    public Result getCategoryTree(){
+    public Result getCategoryTree(Long parentId){
         try {
-            List<CategoryTree> categoryTree = categoryService.getCategoryTree();
+            List<CategoryTree> categoryTree = categoryService.getCategoryTree(null);
             return new Result(true, Message.CATEGORY_QUERY_SUCCESS,categoryTree);
         } catch (Exception e) {
             e.printStackTrace();
