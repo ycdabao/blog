@@ -66,4 +66,16 @@ public class ArticleController {
             return new Result(false,Message.CATEGORY_QUERY_FAIL);
         }
     }
+
+
+    @GetMapping("delete")
+    public Result delete(Long articleId){
+        try {
+            articleService.delete(articleId);
+            return new Result(true,Message.ARTICLE_QUERY_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,Message.ARTICLE_QUERY_FAIL);
+        }
+    }
 }

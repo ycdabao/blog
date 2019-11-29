@@ -32,10 +32,10 @@
                     </div>
                     <el-table size="medium " current-row-key="id" :data="dataList" stripe highlight-current-row>
                         <el-table-column type="index" align="center" label="序号"></el-table-column>
-                        <el-table-column prop="articleTitle" label="标题" align="left" width="300px"></el-table-column>
+                        <el-table-column prop="articleTitle" label="标题" align="left" width="250px"></el-table-column>
                         <el-table-column prop="articleViews" label="浏览量" align="center"></el-table-column>
                         <el-table-column prop="articleCommentCount" label="评论总数" align="center"></el-table-column>
-                        <el-table-column prop="articleDate" label="发表时间" align="center" width="200px"></el-table-column>
+                        <el-table-column prop="articleDate" label="发表时间" align="center" width="150px"></el-table-column>
                         <el-table-column prop="articleLikeCount" label="收藏次数" align="center"></el-table-column>
                         <el-table-column prop="userId" label="发表用户ID" align="center"></el-table-column>
                         <el-table-column label="操作" align="center">
@@ -246,11 +246,29 @@
                 },
 
                 handleCurrentChange(page){
-
+                    this.pagination.currentPage=page;
+                    this.findPage()
                 },
                 handleChange(value) {
                     this.formData.options=value;
                     console.log(this.formData.options)
+                },
+                handleDelete(row){
+
+                    this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        axios.get("/article/delete?articleId="+row.articleId).then((response)=>{
+                            if(response.data.flag==true){
+                                this.findPage()
+                            }else{
+                                this.$message.error(response.data.message);
+                            }
+                        })
+                    })
+
                 }
             }
         })

@@ -28,5 +28,21 @@ public interface CategoryService {
      * @param category
      * @param parentIds
      */
-    public void addCategory(@RequestBody Category category, Long[] parentIds);
+    public void addCategory( Category category, Long[] parentIds);
+
+    /**
+     * 根据ID查询
+     * @param categoryId
+     * @return
+     */
+    public Category findById(Long categoryId);
+
+
+    /**
+     * 更新分类信息
+     * @param category
+     */
+    public void update(Category category);
+
+
 }

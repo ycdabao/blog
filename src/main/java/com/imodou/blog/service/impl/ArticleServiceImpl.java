@@ -1,5 +1,6 @@
 package com.imodou.blog.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -15,6 +16,9 @@ import com.imodou.blog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -70,5 +74,18 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article findByCategoryId(Long categoryId) {
         return articleMapper.findByCategoryId(categoryId);
+    }
+
+
+    @Override
+    public void delete(Long articleId) {
+        //删除文章及类别的映射关系
+        Map<String,Object> condition = new HashMap<>();
+        condition.put("article_id",articleId);
+        articleCategoryMapper.deleteByMap(condition);
+
+        //删除文章
+        articleMapper.deleteById(articleId);
+
     }
 }

@@ -61,4 +61,29 @@ public class CategoryController {
             return new Result(false,Message.CATEGORY_ADD_FAIL);
         }
     }
+
+    @RequestMapping("/findById")
+    public Result findById(Long categoryId){
+
+        try {
+            Category category = categoryService.findById(categoryId);
+            return new Result(true,Message.CATEGORY_QUERY_SUCCESS,category);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,Message.CATEGORY_QUERY_FAIL);
+        }
+
+    }
+
+    @RequestMapping("/update")
+    public Result update(@RequestBody Category category){
+        try {
+            categoryService.update(category);
+            return new Result(true,Message.CATEGORY_UPDATE_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,Message.CATEGORY_UPDATE_FAIL);
+        }
+
+    }
 }

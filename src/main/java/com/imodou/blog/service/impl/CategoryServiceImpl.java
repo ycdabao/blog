@@ -76,4 +76,16 @@ public class CategoryServiceImpl implements CategoryService {
         }
         categoryMapper.insert(category);
     }
+
+
+    @Override
+    public Category findById(Long categoryId) {
+
+        return  categoryMapper.selectById(categoryId);
+    }
+
+    @Override
+    public void update(Category category) {
+        categoryMapper.updateById(category);
+    }
 }

@@ -117,73 +117,65 @@
                     </div>
 
                     <!-- 编辑标签弹层 -->
-    <!--                <div class="add-form">
-                        <el-dialog title="编辑检查项" :visible.sync="dialogFormVisible4Edit">
-                            <el-form ref="dataEditForm" :model="formData" :rules="rules" label-position="right" label-width="100px">
+                   <div class="add-form">
+                        <el-dialog title="编辑分类" :visible.sync="dialogFormVisible4Edit">
+                            <el-form ref="dataAddForm" :model="formData"  label-position="right" label-width="100px">
                                 <el-row>
                                     <el-col :span="12">
-                                        <el-form-item label="项目编码" prop="code">
-                                            <el-input v-model="formData.code"/>
+                                        <el-form-item label="分类名称" prop="code">
+                                            <el-input v-model="formData.categoryName"/>
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="12">
-                                        <el-form-item label="项目名称" prop="name">
-                                            <el-input v-model="formData.name"/>
+                                        <el-form-item label="分类别名" prop="name">
+                                            <el-input v-model="formData.categoryAlias"/>
                                         </el-form-item>
                                     </el-col>
                                 </el-row>
+
                                 <el-row>
                                     <el-col :span="12">
-                                        <el-form-item label="性别">
-                                            <el-select v-model="formData.sex">
-                                                <el-option label="不限" value="0"></el-option>
-                                                <el-option label="男" value="1"></el-option>
-                                                <el-option label="女" value="2"></el-option>
-                                            </el-select>
+                                        <el-form-item label="父分类 ">
+                                            <el-cascader :props="{checkStrictly:true}" ref="category"
+                                                         clearable
+                                                         v-model="value"
+                                                         :options="options"
+                                                         @change="handleChange"  disabled="disabled"></el-cascader>
+
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="12">
-                                        <el-form-item label="适用年龄">
-                                            <el-input v-model="formData.age"/>
+                                        <el-form-item label="排序">
+                                            <el-input v-model="formData.categorySort"/>
                                         </el-form-item>
                                     </el-col>
-                                </el-row>
-                                <el-row>
-                                    <el-col :span="12">
-                                        <el-form-item label="类型">
-                                            <el-select v-model="formData.type">
-                                                <el-option label="检查" value="1"></el-option>
-                                                <el-option label="检验" value="2"></el-option>
-                                            </el-select>
-                                        </el-form-item>
-                                    </el-col>
-                                    <el-col :span="12">
-                                        <el-form-item label="价格">
-                                            <el-input v-model="formData.price"/>
-                                        </el-form-item>
+
                                     </el-col>
                                 </el-row>
                                 <el-row>
                                     <el-col :span="24">
-                                        <el-form-item label="项目说明">
-                                            <el-input v-model="formData.remark" type="textarea"></el-input>
+                                        <el-form-item label="分类描述">
+                                            <el-input v-model="formData.categoryDescription"/>
                                         </el-form-item>
                                     </el-col>
+
                                 </el-row>
                                 <el-row>
                                     <el-col :span="24">
-                                        <el-form-item label="注意事项">
-                                            <el-input v-model="formData.attention" type="textarea"></el-input>
+                                        <el-form-item label="链接">
+                                            <el-input v-model="formData.categoryLinkurl"/>
                                         </el-form-item>
                                     </el-col>
                                 </el-row>
+
+
                             </el-form>
                             <div slot="footer" class="dialog-footer">
                                 <el-button @click="dialogFormVisible4Edit = false">取消</el-button>
                                 <el-button type="primary" @click="handleEdit()">确定</el-button>
                             </div>
                         </el-dialog>
-                    </div>-->
+                    </div>
                 </div>
             </div>
         </div>
@@ -235,8 +227,14 @@
                         }
                     })
                 },
+                reset(){
+                    this.formData={};
+                },
                 //打开新增窗口
                 handleCreate(){
+
+                    this.reset();
+
                     //查询父分类
                     axios.get("/category/getCategoryTree").then((response)=>{
                         if(response.data.flag){
@@ -246,6 +244,9 @@
                         }
 
                     })
+
+
+
 
                     this.dialogFormVisible=true;
                 },
@@ -263,11 +264,50 @@
                 },
 
                 handleCurrentChange(page){
+                    this.pagination.currentPage=page;
+                    this.findPage();
 
                 },
                 handleChange(value) {
                     this.formData.options=value;
-                    console.log(this.formData.options)
+                },
+                handleUpdate(row){
+                    this.reset();
+                    this.dialogFormVisible4Edit=true;
+                    console.log(row.categoryId);
+                    //查询父分类
+                    axios.get("/category/getCategoryTree").then((response1)=>{
+                        if(response1.data.flag){
+                            this.options=response1.data.data;
+
+                        }else{
+                            this.$message.error(response1.data.message);
+                        }
+
+                    });
+                    //回填数据
+                    axios.get("/category/findById?categoryId="+row.categoryId).then((response)=>{
+                        if(response.data.flag){
+                            this.formData=response.data.data;
+                            this.value=[response.data.data.parentCategoryId];
+                        }else{
+                            this.$message.error(response.data.message);
+                        }
+                    });
+
+
+                },
+                //保存修改
+                handleEdit(){
+                    axios.post("/category/update",this.formData).then((response)=>{
+                        this.$message({
+                            type:response.data.flag?"success":"error",
+                            message:response.data.message
+                        })
+
+                        this.dialogFormVisible4Edit=false;
+                        this.findPage();
+                    })
                 }
             }
         })

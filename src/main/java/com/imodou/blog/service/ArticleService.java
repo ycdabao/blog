@@ -28,5 +28,17 @@ public interface ArticleService {
     public PageResult findByCondition(QueryPageBean<Article> queryPageBean);
 
 
+    /**
+     * 根据分类查询
+     * @param categoryId
+     * @return
+     */
     public Article findByCategoryId(Long categoryId);
+
+
+    /**
+     * 根据id删除
+     * @param articleId
+     */
+    public void delete(Long articleId);
 }
