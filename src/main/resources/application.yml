@@ -7,7 +7,7 @@ spring:
     username: root
     password: 51asp.netandjsp
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/blog?characterEncoding=UTF-8
+    url: jdbc:mysql://116.62.159.48:3306/blog?characterEncoding=UTF-8
   devtools:
     restart:
       enabled: true

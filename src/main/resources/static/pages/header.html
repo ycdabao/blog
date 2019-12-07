@@ -46,7 +46,7 @@
                     var html='';
                     for(var i=0;i<msg.data.length;i++){
                         var data=msg.data[i];
-                        html+='  <li><a href="'+data.categoryLinkurl+'">'+data.categoryName+'</a></li>';
+                        html+='  <li><a href="'+data.categoryLinkurl+'?id='+data.categoryId+'">'+data.categoryName+'</a></li>';
                     }
                     $("#categoryul").html(html);
 

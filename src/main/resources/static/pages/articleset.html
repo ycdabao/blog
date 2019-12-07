@@ -117,7 +117,7 @@
         },
         methods:{
             getCategories(){
-                axios.get("/category/getCategoryTree?parentId=9").then((response)=>{
+                axios.get("/category/getCategoryTree?parentId="+id).then((response)=>{
                     if(response.data.flag){
                         this.treeData=response.data.data;
                         console.log(this.treeData)

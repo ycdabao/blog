@@ -1,5 +1,6 @@
 package com.imodou.blog.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.imodou.blog.common.constant.Message;
 import com.imodou.blog.common.entity.PageResult;
 import com.imodou.blog.common.entity.QueryPageBean;
@@ -45,6 +46,11 @@ public class ArticleController {
     }
 
 
+    /**
+     * 根据分类查询教程
+     * @param categoryId
+     * @return
+     */
     @GetMapping("findByCategoryId")
     public Result findByCategoryId(Long categoryId){
         try {
@@ -57,6 +63,23 @@ public class ArticleController {
 
         }
         return new Result(false,Message.ARTICLE_QUERY_FAIL);
+    }
+
+    /**
+     * 根据分类分页查询博文
+     * @param categoryId
+     * @return
+     */
+    @PostMapping("findArticleByCategoryId")
+    public Result findArticleByCategoryId(@RequestBody QueryPageBean<Article> queryPageBean,Long categoryId){
+        try {
+            PageResult result =  articleService.findArticleByCategoryId(queryPageBean, categoryId);
+            return new Result(true, Message.CATEGORY_QUERY_SUCCESS,result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,Message.CATEGORY_QUERY_FAIL);
+        }
+
     }
 
     @PostMapping("pageQuery")

@@ -1,8 +1,11 @@
 package com.imodou.blog.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.imodou.blog.common.entity.PageResult;
 import com.imodou.blog.common.entity.QueryPageBean;
 import com.imodou.blog.pojo.Article;
+
+import java.util.List;
 
 public interface ArticleService {
 
@@ -29,11 +32,19 @@ public interface ArticleService {
 
 
     /**
-     * 根据分类查询
+     * 根据分类查询,查询教程
      * @param categoryId
      * @return
      */
     public Article findByCategoryId(Long categoryId);
+
+
+    /**
+     * 根据分类分页查询，博文列表
+     * @param queryPageBean
+     * @return
+     */
+    public PageResult findArticleByCategoryId(QueryPageBean<Article> queryPageBean, Long categoryId);
 
 
     /**

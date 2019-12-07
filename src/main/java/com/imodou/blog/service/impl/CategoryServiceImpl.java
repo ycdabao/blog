@@ -8,6 +8,7 @@ import com.imodou.blog.common.entity.CategoryTree;
 import com.imodou.blog.common.entity.PageResult;
 import com.imodou.blog.common.entity.QueryPageBean;
 import com.imodou.blog.mapper.CategoryMapper;
+import com.imodou.blog.pojo.Article;
 import com.imodou.blog.pojo.Category;
 import com.imodou.blog.pojo.User;
 import com.imodou.blog.service.CategoryService;
@@ -37,6 +38,9 @@ public class CategoryServiceImpl implements CategoryService {
 
         return result;
     }
+
+
+
 
 
     @Override
@@ -93,6 +97,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> findFirstLevel() {
 
-        return  categoryMapper.selectList(new QueryWrapper<Category>().isNull("parent_category_id"));
+        return  categoryMapper.selectList(new QueryWrapper<Category>().isNull("parent_category_id").orderByAsc("category_sort"));
     }
 }
