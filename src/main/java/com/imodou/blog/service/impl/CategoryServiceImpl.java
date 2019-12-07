@@ -88,4 +88,11 @@ public class CategoryServiceImpl implements CategoryService {
     public void update(Category category) {
         categoryMapper.updateById(category);
     }
+
+
+    @Override
+    public List<Category> findFirstLevel() {
+
+        return  categoryMapper.selectList(new QueryWrapper<Category>().isNull("parent_category_id"));
+    }
 }

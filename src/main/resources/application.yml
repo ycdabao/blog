@@ -1,20 +1,25 @@
+file:
+  upload: /website/upload/
 
 
 spring:
   datasource:
     username: root
-    password: root
+    password: 51asp.netandjsp
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/blog
+    url: jdbc:mysql://localhost:3306/blog?characterEncoding=UTF-8
   devtools:
     restart:
       enabled: true
   freemarker:
     cache: false
   resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/resources/, classpath:/static/,classpath:/public/,file:d:\upload\
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/, classpath:/static/,classpath:/public/,file:/website/upload/
   jackson:
     date-format: yyyy-MM-dd
+  #profiles:
+    #active: dev
+
 
 
 
@@ -25,4 +30,6 @@ mybatis-plus:
 debug: true
 server:
   port: 80
+
+
 

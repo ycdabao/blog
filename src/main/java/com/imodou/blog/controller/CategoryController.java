@@ -86,4 +86,17 @@ public class CategoryController {
         }
 
     }
+
+    @RequestMapping("/findFirstLevel")
+    public Result findFirstLevel(){
+
+        try {
+            List result = categoryService.findFirstLevel();
+            return new Result(true,Message.CATEGORY_QUERY_SUCCESS,result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,Message.CATEGORY_QUERY_FAIL);
+        }
+
+    }
 }

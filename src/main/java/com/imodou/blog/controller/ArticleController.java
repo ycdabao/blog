@@ -49,11 +49,14 @@ public class ArticleController {
     public Result findByCategoryId(Long categoryId){
         try {
             Article article = articleService.findByCategoryId(categoryId);
-            return new Result(true,Message.ARTICLE_QUERY_SUCCESS,article);
+            if(article!=null){
+                return new Result(true,Message.ARTICLE_QUERY_SUCCESS,article);
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false,Message.ARTICLE_QUERY_FAIL);
+
         }
+        return new Result(false,Message.ARTICLE_QUERY_FAIL);
     }
 
     @PostMapping("pageQuery")

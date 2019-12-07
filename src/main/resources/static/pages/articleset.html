@@ -183,8 +183,9 @@
 
         },
         mounted(){
-            axios.get("header.html").then(response=>{
-                this.html =response.data;
+            axios.get("/pages/header.html").then(response=>{
+                // this.html =response.data;
+                $("#header").html(response.data)
             })
         }
     })

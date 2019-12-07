@@ -1,6 +1,8 @@
 package com.imodou.blog.controller;
 
 import com.imodou.blog.common.constant.Message;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,9 +19,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/post")
+@PropertySource("classpath:application.yml")
 public class PostController {
 
-    private String uploadPath="d:\\upload\\";
+    @Value("${file.upload}")
+    private String uploadPath;
 
 
         @RequestMapping(value = "/upload" ,method = RequestMethod.POST)

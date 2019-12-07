@@ -45,4 +45,12 @@ public interface CategoryService {
     public void update(Category category);
 
 
+    /**
+     * 查询一级标题
+     * @param
+     * @return
+     */
+   public List<Category> findFirstLevel();
+
+
 }
