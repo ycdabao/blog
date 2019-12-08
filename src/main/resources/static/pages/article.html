@@ -9,8 +9,27 @@
     <link rel="stylesheet" href="../resources/plugins/editormd/css/editormd.min.css" />
     <link rel="stylesheet" href="../resources/plugins/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="../resources/plugins/editormd/css/editormd.preview.css" />
+    <link rel="stylesheet" href="../resources/plugins/elementui/index.css">
+    <link rel="stylesheet" href="../resources/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../resources/css/style.css">
+    <!-- 引入js -->
     <script type="text/javascript" src="../resources/js/jquery.min.js"></script>
     <script src="../resources/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../resources/js/vue.js"></script>
+    <script src="../resources/plugins/elementui/index.js"></script>
+    <script src="../resources/js/axios-0.18.0.js"></script>
+
+    <script src="../resources/plugins/editormd/lib/marked.min.js"></script>
+    <script src="../resources/plugins/editormd/lib/prettify.min.js"></script>
+
+    <script src="../resources/plugins/editormd/lib/raphael.min.js"></script>
+    <script src="../resources/plugins/editormd/lib/underscore.min.js"></script>
+    <script src="../resources/plugins/editormd/lib/sequence-diagram.min.js"></script>
+    <script src="../resources/plugins/editormd/lib/flowchart.min.js"></script>
+    <script src="../resources/plugins/editormd/lib/jquery.flowchart.min.js"></script>
+
+    <script src="../resources/plugins/editormd/editormd.js"></script>
+    <!--<link rel="stylesheet" href="css/style.css" />-->
     <script>
         function getUrlParam(paraName) {
             var url = document.location.toString();
@@ -33,7 +52,6 @@
         }
     </script>
 
-
     <style>
         *{
             margin: 0px;
@@ -43,105 +61,99 @@
             width: 90%;
             margin: 0 auto;
         }
-        body { padding-top: 70px; background-color: #f9f9f9}
 
+        body { padding-top: 70px;}
+
+        body.reader-black-font, body.reader-black-font .history-mode .view-area, body.reader-black-font .history-mode .view-area pre, body.reader-black-font .main .kalamu-area, body.reader-black-font .main .markdown .text, body.reader-black-font input, body.reader-black-font select, body.reader-black-font textarea {
+            font-family: "微软雅黑",-apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
+        }
     </style>
 </head>
-<body>
-<!--导航-->
+<body style="background-color: #fcfcfc">
+<div id="app">
+    <!--导航-->
+
+    <!--导航-->
+    <div class="container-fluid" id="header" v-html="html">
+
+    </div><!-- /.container-fluid -->
 
 
-            <div class="container-fluid" v-html="html">
+    <!--正文-->
+    <div class="container-fluid"  >
+        <div class="row">
+            <div class="col-lg-2 hidden-xs hidden-md hidden-sm">
 
-            </div><!-- /.container-fluid -->
-
-
-
-<!--正文-->
-<div class="container-fluid" >
-    <div class="row">
-        <div class="col-lg-1 hidden-xs hidden-md hidden-sm"></div>
-        <div class="col-lg-9  ">
-            <div id="test-editormd-view">
-                <textarea style="display:none;" name="test-editormd-markdown-doc">###Hello world!</textarea>
             </div>
-            <div id="test-editormd-view2" class="img-rounded img-thumbnail">
-                <textarea id="append-test" style="display:none;">
-                </textarea>
+            <div class="col-lg-7">
+                <div id="test-editormd-view" >
+                    <textarea style="display:none;" name="test-editormd-markdown-doc">###Hello world!</textarea>
+                </div>
+
             </div>
+            <div class="col-lg-3 hidden-xs hidden-md hidden-sm">
+                <div class="markdown-body editormd-preview-container offset6" id="custom-toc-container" ></div>
+            </div>
+
         </div>
-        <div class="col-lg-2 hidden-xs hidden-md hidden-sm"></div>
-
     </div>
 </div>
 
 
 
 
-<script src="../resources/plugins/editormd/lib/marked.min.js"></script>
-<script src="../resources/plugins/editormd/lib/prettify.min.js"></script>
 
-<script src="../resources/plugins/editormd/lib/raphael.min.js"></script>
-<script src="../resources/plugins/editormd/lib/underscore.min.js"></script>
-<script src="../resources/plugins/editormd/lib/sequence-diagram.min.js"></script>
-<script src="../resources/plugins/editormd/lib/flowchart.min.js"></script>
-<script src="../resources/plugins/editormd/lib/jquery.flowchart.min.js"></script>
-
-<script src="../resources/plugins/editormd/editormd.js"></script>
 <script>
-    $(function(){
- /*       $.ajax({
-            type: "get",
-            url: "/article/findById?id=1",
-            success: function(response){
 
-               $("#article").html(response.data.articleContent);
+    var id=getUrlParam("id");
+    var vue = new Vue({
+        el:"#app",
+        data:{
+            article:{},
+            html:""
+
+        },
+        methods:{
+
+            showArticle(){
+
+                axios.get("/article/findById?id="+id).then((response)=>{
+                    $("#test-editormd-view").html("");
+                    var testEditormdView, testEditormdView2;
+                    testEditormdView = editormd.markdownToHTML("test-editormd-view", {
+                        markdown        : response.data.data.articleContent ,//+ "\r\n" + $("#append-test").text(),
+                        //htmlDecode      : true,       // 开启 HTML 标签解析，为了安全性，默认不开启
+                        htmlDecode      : "style,script,iframe",  // you can filter tags decode
+                        //toc             : false,
+                        tocm            : true,    // Using [TOCM]
+                        tocContainer    : "#custom-toc-container", // 自定义 ToC 容器层
+                        //gfm             : false,
+                        //tocDropdown     : true,
+                        // markdownSourceCode : true, // 是否保留 Markdown 源码，即是否删除保存源码的 Textarea 标签
+                        emoji           : true,
+                        taskList        : true,
+                        tex             : true,  // 默认不解析
+                        flowChart       : true,  // 默认不解析
+                        sequenceDiagram : true,  // 默认不解析
+                    });
+                })
 
             }
-        });
-*/
+        },
+        created(){
+            this.showArticle();
 
-        var testEditormdView, testEditormdView2;
-        var id=getUrlParam("id");
-
-        $.get("/article/findById?id="+id, function(markdown) {
-
-            testEditormdView = editormd.markdownToHTML("test-editormd-view", {
-                markdown        : markdown.data.articleContent ,//+ "\r\n" + $("#append-test").text(),
-                //htmlDecode      : true,       // 开启 HTML 标签解析，为了安全性，默认不开启
-                htmlDecode      : "style,script,iframe",  // you can filter tags decode
-                //toc             : false,
-                tocm            : true,    // Using [TOCM]
-                //tocContainer    : "#custom-toc-container", // 自定义 ToC 容器层
-                //gfm             : false,
-                //tocDropdown     : true,
-                // markdownSourceCode : true, // 是否保留 Markdown 源码，即是否删除保存源码的 Textarea 标签
-                emoji           : true,
-                taskList        : true,
-                tex             : true,  // 默认不解析
-                flowChart       : true,  // 默认不解析
-                sequenceDiagram : true,  // 默认不解析
-            });
-
-            //console.log("返回一个 jQuery 实例 =>", testEditormdView);
-
-            // 获取Markdown源码
-            //console.log(testEditormdView.getMarkdown());
-
-            //alert(testEditormdView.getMarkdown());
-        });
-
-        testEditormdView2 = editormd.markdownToHTML("test-editormd-view2", {
-            htmlDecode      : "style,script,iframe",  // you can filter tags decode
-            emoji           : true,
-            taskList        : true,
-            tex             : true,  // 默认不解析
-            flowChart       : true,  // 默认不解析
-            sequenceDiagram : true,  // 默认不解析
-        });
-
-
+        },
+        mounted(){
+            axios.get("/pages/header.html").then(response=>{
+                // this.html =response.data;
+                $("#header").html(response.data)
+            })
+        }
     })
 </script>
+
+
+
 </body>
 </html>

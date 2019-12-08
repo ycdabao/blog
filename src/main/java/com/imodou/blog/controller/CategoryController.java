@@ -42,7 +42,7 @@ public class CategoryController {
     @RequestMapping("/getCategoryTree")
     public Result getCategoryTree(Long parentId){
         try {
-            List<CategoryTree> categoryTree = categoryService.getCategoryTree(null);
+            List<CategoryTree> categoryTree = categoryService.getCategoryTree(parentId);
             return new Result(true, Message.CATEGORY_QUERY_SUCCESS,categoryTree);
         } catch (Exception e) {
             e.printStackTrace();
