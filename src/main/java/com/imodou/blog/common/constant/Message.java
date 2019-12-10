@@ -17,4 +17,6 @@ public class Message {
     public static final String ARTICLE_QUERY_FAIL="内容获取失败";
     public static final String ARTICLE_DEL_SUCCESS="删除成功";
     public static final String ARTICLE_DEL_FAIL="删除失败";
+    public static final String ARTICLE_MODIFY_SUCCESS="修改成功";
+    public static final String ARTICLE_MODIFY_FAIL="修改失败";
 }

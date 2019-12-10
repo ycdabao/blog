@@ -8,6 +8,27 @@
     <link rel="stylesheet" href="../resources/plugins/elementui/index.css">
     <link rel="stylesheet" href="../resources/plugins/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="../resources/css/style.css">
+    <script>
+        function getUrlParam(paraName) {
+            var url = document.location.toString();
+            //alert(url);
+            var arrObj = url.split("?");
+            if (arrObj.length > 1) {
+                var arrPara = arrObj[1].split("&");
+                var arr;
+                for (var i = 0; i < arrPara.length; i++) {
+                    arr = arrPara[i].split("=");
+                    if (arr != null && arr[0] == paraName) {
+                        return arr[1];
+                    }
+                }
+                return "";
+            }
+            else {
+                return "";
+            }
+        }
+    </script>
 </head>
 <body>
 <div id="app">
@@ -22,23 +43,16 @@
 <el-form :model="formData" label-width="100px" size="small">
     <el-form-item label="标题" >
         <el-input v-model="formData.articleTitle" style="width: 80%"></el-input>
-        <el-button type="primary" @click="post">发布</el-button>
+        <el-button type="primary" @click="post">保存</el-button>
     </el-form-item>
     <el-form-item label="摘要" >
         <el-input v-model="formData.articleSummary" style="width: 80%">></el-input>
-    </el-form-item>
-    <el-form-item label="父分类 ">
-        <el-cascader :props="{checkStrictly:true}"
-                     clearable
-                     v-model="value"
-                     :options="options"
-                     @change="handleChange"  ></el-cascader>
-
     </el-form-item>
     <el-form-item label="正文">
         <div id="editor">
             <!-- Tips: Editor.md can auto append a `<textarea>` tag -->
             <textarea style="display:none;" id="content">### Hello Editor.md !</textarea>
+            <textarea class="editormd-html-textarea" name="text" id="htmlContent"></textarea>
         </div>
     </el-form-item>
 </el-form>
@@ -52,6 +66,7 @@
 <script type="text/javascript" src="../resources/js/jquery.min.js"></script>
 <script src="../resources/js/axios-0.18.0.js"></script>
 <script>
+    var id=getUrlParam("id");
     var vue = new Vue({
         el:"#app",
         data:{
@@ -60,29 +75,16 @@
             value:[], //获取选中的分类
         },
         methods:{
-            findCategory(){ //获取分类信息
-                //查询父分类
-                axios.get("/category/getCategoryTree").then((response)=>{
-                    if(response.data.flag){
-                        this.options=response.data.data;
-                    }else{
-                        this.$message.error(response.data.message);
-                    }
+            findArticle(){
+              axios.get("/article/findById?id="+id).then((response)=>{
+                  this.formData=response.data.data;
+                    document.getElementById("content").innerHTML= response.data.data.articleContent;
+              })
 
-                })
-            },
-            handleChange(value) {   //分类下拉改变
-                this.formData.options=value;
-                console.log(this.formData.options)
             },
             post(){ //发表文章
-                var param={
-                    articleTitle:this.formData.articleTitle,
-                    articleSummary:this.formData.articleSummary,
-                    articleContent:$("#content").val()
-                }
-
-                axios.post("/article/addArticle?categoryIds="+this.value,param).then((response)=>{
+                this.formData.articleContent=$("#content").val();
+                axios.post("/article/update",this.formData).then((response)=>{
                     this.$message({
                         type:response.data.flag?"success":"error",
                         message:response.data.message
@@ -91,10 +93,10 @@
             }
         },
         created(){
-            this.findCategory();
+
         },
         mounted(){
-
+            this.findArticle();
         }
     })
 </script>

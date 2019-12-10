@@ -105,4 +105,10 @@ public class ArticleServiceImpl implements ArticleService {
         articleMapper.deleteById(articleId);
 
     }
+
+
+    @Override
+    public void update(Article article) {
+        articleMapper.updateById(article);
+    }
 }

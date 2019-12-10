@@ -17,6 +17,8 @@
     <script src="../resources/js/vue.js"></script>
     <script src="../resources/plugins/elementui/index.js"></script>
     <script src="../resources/js/axios-0.18.0.js"></script>
+    <script src="../resources/js/jquery.min.js"></script>
+
     <script>
         function getUrlParam(paraName) {
             var url = document.location.toString();
@@ -225,6 +227,7 @@
         el:"#app",
         data:{
             dataList:[],
+
             pagination: {//分页相关模型数据
                 currentPage: 1,//当前页码
                 pageSize:10,//每页显示的记录数

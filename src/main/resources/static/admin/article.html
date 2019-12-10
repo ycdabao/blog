@@ -8,6 +8,7 @@
         <meta name="description" content="魔豆Blog">
         <meta name="keywords" content="魔豆Blog">
         <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+        <link rel="stylesheet" href="../resources/plugins/editormd/css/editormd.min.css" />
         <!-- 引入样式 -->
         <link rel="stylesheet" href="../resources/plugins/elementui/index.css">
         <link rel="stylesheet" href="../resources/plugins/font-awesome/css/font-awesome.min.css">
@@ -28,7 +29,7 @@
                     <div class="filter-container">
                         <el-input placeholder="项目编码/项目名称"  style="width: 200px;" class="filter-item"></el-input>
                         <el-button  class="dalfBut">查询</el-button>
-                        <el-button type="primary" class="butT" @click="handleCreate">新建</el-button>
+
                     </div>
                     <el-table size="medium " current-row-key="id" :data="dataList" stripe highlight-current-row>
                         <el-table-column type="index" align="center" label="序号"></el-table-column>
@@ -55,136 +56,7 @@
                             :total="pagination.total">
                         </el-pagination>
                     </div>
-                    <!-- 新增标签弹层 -->
-                 <div class="add-form">
-                        <el-dialog title="新增分类" :visible.sync="dialogFormVisible">
-                            <el-form ref="dataAddForm" :model="formData"  label-position="right" label-width="100px">
-                                <el-row>
-                                    <el-col :span="12">
-                                        <el-form-item label="分类名称" prop="code">
-                                            <el-input v-model="formData.categoryName"/>
-                                        </el-form-item>
-                                    </el-col>
-                                    <el-col :span="12">
-                                        <el-form-item label="分类别名" prop="name">
-                                            <el-input v-model="formData.categoryAlias"/>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-
-                                <el-row>
-                                    <el-col :span="12">
-                                        <el-form-item label="父分类 ">
-                                            <el-cascader :props="{checkStrictly:true}"
-                                                    clearable
-                                                    v-model="value"
-                                                    :options="options"
-                                                    @change="handleChange"  ></el-cascader>
-
-                                        </el-form-item>
-                                    </el-col>
-                                    <el-col :span="12">
-                                        <el-form-item label="排序">
-                                            <el-input v-model="formData.categorySort"/>
-                                        </el-form-item>
-                                    </el-col>
-
-                                    </el-col>
-                                </el-row>
-                                <el-row>
-                                    <el-col :span="24">
-                                        <el-form-item label="分类描述">
-                                            <el-input v-model="formData.categoryDescription"/>
-                                        </el-form-item>
-                                    </el-col>
-
-                                </el-row>
-                                <el-row>
-                                    <el-col :span="24">
-                                        <el-form-item label="链接">
-                                            <el-input v-model="formData.categorySort"/>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-
-
-                            </el-form>
-                            <div slot="footer" class="dialog-footer">
-                                <el-button @click="dialogFormVisible = false">取消</el-button>
-                                <el-button type="primary" @click="handleAdd">确定</el-button>
-                            </div>
-                        </el-dialog>
-                    </div>
-
-                    <!-- 编辑标签弹层 -->
-    <!--                <div class="add-form">
-                        <el-dialog title="编辑检查项" :visible.sync="dialogFormVisible4Edit">
-                            <el-form ref="dataEditForm" :model="formData" :rules="rules" label-position="right" label-width="100px">
-                                <el-row>
-                                    <el-col :span="12">
-                                        <el-form-item label="项目编码" prop="code">
-                                            <el-input v-model="formData.code"/>
-                                        </el-form-item>
-                                    </el-col>
-                                    <el-col :span="12">
-                                        <el-form-item label="项目名称" prop="name">
-                                            <el-input v-model="formData.name"/>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-                                <el-row>
-                                    <el-col :span="12">
-                                        <el-form-item label="性别">
-                                            <el-select v-model="formData.sex">
-                                                <el-option label="不限" value="0"></el-option>
-                                                <el-option label="男" value="1"></el-option>
-                                                <el-option label="女" value="2"></el-option>
-                                            </el-select>
-                                        </el-form-item>
-                                    </el-col>
-                                    <el-col :span="12">
-                                        <el-form-item label="适用年龄">
-                                            <el-input v-model="formData.age"/>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-                                <el-row>
-                                    <el-col :span="12">
-                                        <el-form-item label="类型">
-                                            <el-select v-model="formData.type">
-                                                <el-option label="检查" value="1"></el-option>
-                                                <el-option label="检验" value="2"></el-option>
-                                            </el-select>
-                                        </el-form-item>
-                                    </el-col>
-                                    <el-col :span="12">
-                                        <el-form-item label="价格">
-                                            <el-input v-model="formData.price"/>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-                                <el-row>
-                                    <el-col :span="24">
-                                        <el-form-item label="项目说明">
-                                            <el-input v-model="formData.remark" type="textarea"></el-input>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-                                <el-row>
-                                    <el-col :span="24">
-                                        <el-form-item label="注意事项">
-                                            <el-input v-model="formData.attention" type="textarea"></el-input>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-                            </el-form>
-                            <div slot="footer" class="dialog-footer">
-                                <el-button @click="dialogFormVisible4Edit = false">取消</el-button>
-                                <el-button type="primary" @click="handleEdit()">确定</el-button>
-                            </div>
-                        </el-dialog>
-                    </div>-->
-                </div>
+            </div>
             </div>
         </div>
     </body>
@@ -193,6 +65,7 @@
     <script src="../resources/plugins/elementui/index.js"></script>
     <script type="text/javascript" src="../resources/js/jquery.min.js"></script>
     <script src="../resources/js/axios-0.18.0.js"></script>
+    <script src="../resources/plugins/editormd/editormd.min.js"></script>
     <script>
         var vue = new Vue({
             el: '#app',
@@ -203,11 +76,7 @@
 					  total:0,//总记录数
                         article:null//查询条件
 				},
-
 				dataList: [],//当前页要展示的分页列表数据
-                formData: {},//表单数据
-                dialogFormVisible: false,//增加表单是否可见
-                dialogFormVisible4Edit:false,//编辑表单是否可见
                 rules: {//校验规则
                     code: [{ required: true, message: '项目编码为必填项', trigger: 'blur' }],
                     name: [{ required: true, message: '项目名称为必填项', trigger: 'blur' }]
@@ -216,6 +85,9 @@
             //钩子函数，VUE对象初始化完成后自动执行
             created() {
                 this.findPage();//VUE对象初始化完成后调用分页查询方法，完成分页查询
+
+
+
             },
             methods: {
                 findPage(){
@@ -234,24 +106,14 @@
                         }
                     })
                 },
-                //打开新增窗口
-                handleCreate(){
+                handleUpdate(row){
 
-
-                    this.dialogFormVisible=true;
-                },
-                //保存分类
-                handleAdd(){
+                    window.location.href="edit.html?id="+row.articleId;
 
                 },
-
                 handleCurrentChange(page){
                     this.pagination.currentPage=page;
                     this.findPage()
-                },
-                handleChange(value) {
-                    this.formData.options=value;
-                    console.log(this.formData.options)
                 },
                 handleDelete(row){
 
@@ -270,7 +132,20 @@
                     })
 
                 }
+            },
+            mounted(){
+
             }
         })
+    </script>
+
+
+    <script type="text/javascript">
+
+
+        $(function() {
+
+        });
+
     </script>
 </html>

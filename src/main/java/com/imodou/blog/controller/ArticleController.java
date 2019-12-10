@@ -104,4 +104,16 @@ public class ArticleController {
             return new Result(false,Message.ARTICLE_QUERY_FAIL);
         }
     }
+
+
+    @PostMapping("update")
+    public Result update(@RequestBody Article article){
+        try {
+            articleService.update(article);
+            return new Result(true,Message.ARTICLE_MODIFY_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,Message.ARTICLE_MODIFY_FAIL);
+        }
+    }
 }

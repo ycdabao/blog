@@ -52,4 +52,10 @@ public interface ArticleService {
      * @param articleId
      */
     public void delete(Long articleId);
+
+
+    /*
+
+     */
+    public void update(Article article);
 }
