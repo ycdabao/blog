@@ -51,7 +51,7 @@
     <el-form-item label="正文">
         <div id="editor">
             <!-- Tips: Editor.md can auto append a `<textarea>` tag -->
-            <textarea style="display:none;" id="content">### Hello Editor.md !</textarea>
+            <textarea style="display:none;" id="content">{{articleContent}}</textarea>
             <textarea class="editormd-html-textarea" name="text" id="htmlContent"></textarea>
         </div>
     </el-form-item>
@@ -73,12 +73,16 @@
             formData:{},
             options:[],//分类项
             value:[], //获取选中的分类
+            articleContent:""
         },
         methods:{
             findArticle(){
               axios.get("/article/findById?id="+id).then((response)=>{
                   this.formData=response.data.data;
-                    document.getElementById("content").innerHTML= response.data.data.articleContent;
+                   // document.getElementById("content").innerText= response.data.data.articleContent;
+                  //$("#content").val(response.data.data.articleContent);
+                  this.articleContent=response.data.data.articleContent;
+                  console.log(this.articleContent)
               })
 
             },
@@ -93,10 +97,10 @@
             }
         },
         created(){
-
+            this.findArticle();
         },
         mounted(){
-            this.findArticle();
+
         }
     })
 </script>

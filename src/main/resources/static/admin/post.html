@@ -8,6 +8,31 @@
     <link rel="stylesheet" href="../resources/plugins/elementui/index.css">
     <link rel="stylesheet" href="../resources/plugins/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="../resources/css/style.css">
+    <style>
+        .avatar-uploader .el-upload {
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .avatar-uploader .el-upload:hover {
+            border-color: #409EFF;
+        }
+        .avatar-uploader-icon {
+            font-size: 28px;
+            color: #8c939d;
+            width: 178px;
+            height: 178px;
+            line-height: 178px;
+            text-align: center;
+        }
+        .avatar {
+            width: 178px;
+            height: 178px;
+            display: block;
+        }
+    </style>
 </head>
 <body>
 <div id="app">
@@ -35,6 +60,17 @@
                      @change="handleChange"  ></el-cascader>
 
     </el-form-item>
+    <el-form-item label="缩略图" >
+        <el-upload
+                class="avatar-uploader"
+                action="/post/uploadCover"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+    </el-form-item>
     <el-form-item label="正文">
         <div id="editor">
             <!-- Tips: Editor.md can auto append a `<textarea>` tag -->
@@ -58,6 +94,7 @@
             formData:{},
             options:[],//分类项
             value:[], //获取选中的分类
+            imageUrl: ''
         },
         methods:{
             findCategory(){ //获取分类信息
@@ -73,7 +110,7 @@
             },
             handleChange(value) {   //分类下拉改变
                 this.formData.options=value;
-                console.log(this.formData.options)
+
             },
             post(){ //发表文章
                 var param={
@@ -88,7 +125,23 @@
                         message:response.data.message
                     })
                 })
+            },
+            handleAvatarSuccess(res, file) {
+                this.imageUrl = res.data;
+            },
+            beforeAvatarUpload(file) {
+         /*       const isJPG = file.type === 'image/jpeg';
+                const isLt2M = file.size / 1024 / 1024 < 2;
+
+                if (!isJPG) {
+                    this.$message.error('上传头像图片只能是 JPG 格式!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 2MB!');
+                }*/
+                return true;
             }
+
         },
         created(){
             this.findCategory();
