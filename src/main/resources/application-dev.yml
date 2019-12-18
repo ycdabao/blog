@@ -1,4 +1,5 @@
-
+file:
+  upload: c:\upload\
 
 spring:
   datasource:
