@@ -20,9 +20,6 @@ spring:
   profiles:
     active: dev
 
-
-
-
 mybatis-plus:
   type-aliases-package: com.imodou.blog.pojo
   configuration:
@@ -30,6 +27,9 @@ mybatis-plus:
 debug: true
 server:
   port: 80
+  compression:
+    enabled: true
+    mime-types: application/javascript,text/css,application/json,application/xml,text/html,text/xml,text/plain
 
 
 
