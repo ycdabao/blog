@@ -23,10 +23,10 @@ import java.util.UUID;
 @PropertySource("classpath:application.yml")
 public class PostController {
 
-    @Value("${file.upload}")
-    private String uploadPath;
 
 
+
+/*
         @RequestMapping(value = "/upload" ,method = RequestMethod.POST)
         public Map editorMD(HttpServletRequest request, @RequestParam(value = "editormd-image-file", required = false) MultipartFile file) throws IOException {
             HashMap result = new HashMap();
@@ -43,14 +43,18 @@ public class PostController {
                 //得到完整路径名
                 File newFile = new File(uploadPath+File.separator+dateFile+File.separator+fileName);
 
-                /*文件不存在就创建*/
+                */
+/*文件不存在就创建*//*
+
                 if(!newFile.getParentFile().exists()){
                     newFile.getParentFile().mkdirs();
                 }
                 file.transferTo(newFile);
                 //System.out.println("/resources/upload/"+dateFile+File.separator+originalFile);
                // System.out.println(dateFile+"/"+file.getOriginalFilename());
-                /*JSON格式*/
+                */
+/*JSON格式*//*
+
 
                 result.put("success",1);
                 result.put("message",Message.FILE_UPLOAD_SUCCESS);
@@ -82,14 +86,18 @@ public class PostController {
             //得到完整路径名
             File newFile = new File(uploadPath+File.separator+dateFile+File.separator+fileName);
 
-            /*文件不存在就创建*/
+            */
+/*文件不存在就创建*//*
+
             if(!newFile.getParentFile().exists()){
                 newFile.getParentFile().mkdirs();
             }
             file.transferTo(newFile);
             //System.out.println("/resources/upload/"+dateFile+File.separator+originalFile);
             // System.out.println(dateFile+"/"+file.getOriginalFilename());
-            /*JSON格式*/
+            */
+/*JSON格式*//*
+
           return new Result(true,Message.FILE_UPLOAD_SUCCESS,"/upload/"+date.get(Calendar.YEAR)+"/"+(date.get(Calendar.MONTH)+1)+"/"+date.get(Calendar.DATE)+"/"+fileName);
 
 
@@ -100,6 +108,7 @@ public class PostController {
         }
 
     }
+*/
 
 
 

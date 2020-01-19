@@ -17,8 +17,7 @@ spring:
     static-locations: classpath:/META-INF/resources/,classpath:/resources/, classpath:/static/,classpath:/public/,file:/website/upload/
   jackson:
     date-format: yyyy-MM-dd
-  profiles:
-    active: dev
+
 
 mybatis-plus:
   type-aliases-package: com.imodou.blog.pojo
