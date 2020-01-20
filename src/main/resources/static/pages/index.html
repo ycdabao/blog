@@ -137,6 +137,29 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
+        .wrap-img {
+            position: absolute;
+            top: 50%;
+            margin-top: -60px;
+            right: 0;
+            width: 125px;
+            height: 100px;
+        }
+
+        img {
+            vertical-align: middle;
+        }
+
+        img {
+            border: 0;
+        }
+        .wrap-img img {
+            width: 100%;
+            height: 100%;
+            border-radius: 4px;
+            border: 1px solid #f0f0f0;
+        }
+
     </style>
 </head>
 <body>
@@ -153,7 +176,11 @@
             <div class="col-lg-7  " style="background-color: #ffffff;">
                 <div id="list-container">
                     <ul class="note-list">
-                        <li id="note-41080202" data-note-id="41080202" class="" v-for="item in dataList">
+                        <li id="note-41080202" data-note-id="41080202" class="have-img" v-for="item in dataList">
+                            <a class="wrap-img" href="/p/6d30aea77cf2" target="_blank" v-if="item.articleCoverPhoto!=null && item.articleCoverPhoto!=''">
+
+                                <img  :src="item.articleCoverPhoto"  class="img-blur-done" alt="120">
+                            </a>
                             <div class="content">
                                 <a class="title" target="_self" :href="getGoodsHref(item.articleId )">
                                     <span v-text='item.articleTitle'></span></a>
@@ -165,7 +192,7 @@
     <span class="jsd-meta">
       <i class="iconfont ic-paid1"></i> 23.5
     </span>
-                                    <a class="nickname" target="_blank" href="/u/9a4c36f116e3">花无少年i</a>
+                                    <a class="nickname" target="_blank" href="/u/9a4c36f116e3">admin</a>
                                     <a target="_blank" href="/p/e191149e4fa2#comments">
                                         <i class="iconfont ic-list-comments"></i> {{item.articleCommentCount}}
                                     </a>      <span><i class="iconfont ic-list-like"></i> {{item.articleLikeCount}}</span>
@@ -233,7 +260,7 @@
                 this.pagination.currentPage=page;
             },
             getGoodsHref:function(val){
-                return 'article.html?id='+val
+                return '/pages/article.html?id='+val
             }
         },
         created(){

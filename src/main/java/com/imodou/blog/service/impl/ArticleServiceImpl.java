@@ -39,6 +39,7 @@ public class ArticleServiceImpl implements ArticleService {
 
         QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("article_id", "article_title", "article_summary", "article_views", "article_comment_count", "article_date", "article_like_count", "user_id", "article_cover_photo");
+        queryWrapper.orderByDesc("article_date");
 
         IPage<Article> mapIPage = articleMapper.selectPage(page, queryWrapper);
 
