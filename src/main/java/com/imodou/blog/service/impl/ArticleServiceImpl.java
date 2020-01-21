@@ -80,10 +80,23 @@ public class ArticleServiceImpl implements ArticleService {
 
     }
 
-
+    /**
+     * 查看文章
+     * @param id
+     * @return
+     */
     @Override
     public Article findById(Long id) {
         Article article = articleMapper.selectById(id);
+
+        //浏览次数+1处理
+        Long articleViews = article.getArticleViews();
+        if(articleViews==null){
+            article.setArticleViews(1L);
+        }else{
+            article.setArticleViews(articleViews+1);
+        }
+        articleMapper.updateById(article);
 
         return article;
     }
