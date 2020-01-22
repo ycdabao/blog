@@ -24,6 +24,7 @@
         *{
             margin: 0px;
             padding: 0px;
+            font-family: apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif
         }
 
 
@@ -176,6 +177,14 @@
         <div class="row">
             <div class="col-lg-3 hidden-xs hidden-md hidden-sm"></div>
             <div class="col-lg-5 " style="background-color: #ffffff;">
+                <div class="block" style="margin-bottom: 50px;border:1px solid red">
+                    <span class="demonstration">默认 Hover 指示器触发</span>
+                    <el-carousel height="150px">
+                        <el-carousel-item v-for="item in 4" :key="item">
+                            <h3 class="small">{{ item }}</h3>
+                        </el-carousel-item>
+                    </el-carousel>
+                </div>
                 <div id="list-container">
                     <ul class="note-list">
                         <li id="note-41080202" data-note-id="41080202" class="have-img" v-for="item in dataList">
