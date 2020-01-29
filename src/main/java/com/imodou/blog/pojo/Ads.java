@@ -22,6 +22,7 @@ public class Ads extends Model<Ads> {
     private Date updateTime;
     private Long userid;
     private int status;
+
     public Integer getId() {
         return id;
     }
@@ -117,6 +118,8 @@ public class Ads extends Model<Ads> {
     public void setStatus(int status) {
         this.status = status;
     }
+
+
 
 
 
