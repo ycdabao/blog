@@ -19,4 +19,13 @@ public class Message {
     public static final String ARTICLE_DEL_FAIL="删除失败";
     public static final String ARTICLE_MODIFY_SUCCESS="修改成功";
     public static final String ARTICLE_MODIFY_FAIL="修改失败";
+
+    public static final String ADS_ADD_SUCCESS="广告位发表成功";
+    public static final String ADS_ADD_FAIL="广告位发表失败";
+    public static final String ADS_QUERY_SUCCESS="内容获取成功";
+    public static final String ADS_QUERY_FAIL="内容获取失败";
+    public static final String ADS_DEL_SUCCESS="删除成功";
+    public static final String ADS_DEL_FAIL="删除失败";
+    public static final String ADS_MODIFY_SUCCESS="修改成功";
+    public static final String ADS_MODIFY_FAIL="修改失败";
 }
