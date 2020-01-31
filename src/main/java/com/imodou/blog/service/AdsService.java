@@ -22,4 +22,6 @@ public interface AdsService {
 
     public List<Ads> findByPlace(int place);
 
+    public void delAds(Integer id);
+
 }

@@ -143,23 +143,23 @@
     <script>
         var vue = new Vue({
             el: '#app',
-            data:{
+            data: {
                 pagination: {//分页相关模型数据
-					  currentPage: 1,//当前页码
-					  pageSize:10,//每页显示的记录数
-					  total:0,//总记录数
-					  category:null//查询条件
-				},
-                imageUrl:"",
-				dataList: [],//当前页要展示的分页列表数据
+                    currentPage: 1,//当前页码
+                    pageSize: 10,//每页显示的记录数
+                    total: 0,//总记录数
+                    category: null//查询条件
+                },
+                imageUrl: "",
+                dataList: [],//当前页要展示的分页列表数据
                 formData: {
-                    type:1
+                    type: 1
                 },//表单数据
                 dialogFormVisible: false,//增加表单是否可见
-                dialogFormVisible4Edit:false,//编辑表单是否可见
+                dialogFormVisible4Edit: false,//编辑表单是否可见
                 rules: {//校验规则
-                    code: [{ required: true, message: '项目编码为必填项', trigger: 'blur' }],
-                    name: [{ required: true, message: '项目名称为必填项', trigger: 'blur' }]
+                    code: [{required: true, message: '项目编码为必填项', trigger: 'blur'}],
+                    name: [{required: true, message: '项目名称为必填项', trigger: 'blur'}]
                 }
             },
             //钩子函数，VUE对象初始化完成后自动执行
@@ -169,26 +169,28 @@
             },
 
             methods: {
-                findPage(){
-                    var param={
-                        currentPage:this.pagination.currentPage,
-                        pageSize:this.pagination.pageSize,
-                        object:this.pagination.category
+                findPage() {
+                    var param = {
+                        currentPage: this.pagination.currentPage,
+                        pageSize: this.pagination.pageSize,
+                        object: this.pagination.category
                     }
 
-                    axios.post("/ads/pageQuery",param).then((response)=>{
-                        if(response.data.flag==true){
-                            this.dataList=response.data.data.rows;
-                            this.pagination.total=response.data.data.total;
-                        }else{
+                    axios.post("/ads/pageQuery", param).then((response) => {
+                        if (response.data.flag == true) {
+                            this.dataList = response.data.data.rows;
+                            this.pagination.total = response.data.data.total;
+                        } else {
                             this.$message.error(response.data.message);
                         }
                     })
                 },
+
                 handleAvatarSuccess(res, file) {
                     this.imageUrl = res.data;
 
                 },
+
                 beforeAvatarUpload(file) {
                     /*       const isJPG = file.type === 'image/jpeg';
                            const isLt2M = file.size / 1024 / 1024 < 2;
@@ -201,72 +203,72 @@
                            }*/
                     return true;
                 },
-                reset(){
-                    this.formData={};
+
+                reset() {
+                    this.formData = {};
                 },
+
                 //打开新增窗口
-                handleCreate(){
+                handleCreate() {
 
                     this.reset();
 
-                    this.dialogFormVisible=true;
+                    this.dialogFormVisible = true;
                 },
+
                 //保存
-                handleAdd(){
-                    this.formData.imgsrc=this.imageUrl;
-                    axios.post("/ads/addAds",this.formData).then((response)=>{
+                handleAdd() {
+                    this.formData.imgsrc = this.imageUrl;
+                    axios.post("/ads/addAds", this.formData).then((response) => {
                         this.$message({
-                            type:response.data.flag?"success":"error",
-                            message:response.data.message
+                            type: response.data.flag ? "success" : "error",
+                            message: response.data.message
                         })
 
-                        this.dialogFormVisible=false;
+                        this.dialogFormVisible = false;
                         this.findPage();
                     })
                 },
 
-                handleCurrentChange(page){
-                    this.pagination.currentPage=page;
+                handleCurrentChange(page) {
+                    this.pagination.currentPage = page;
                     this.findPage();
 
                 },
 
-                handleUpdate(row){
+                handleUpdate(row) {
                     this.reset();
-                    this.dialogFormVisible4Edit=true;
-                    console.log(row.categoryId);
-                    //查询父分类
-                    axios.get("/category/getCategoryTree").then((response1)=>{
-                        if(response1.data.flag){
-                            this.options=response1.data.data;
-
-                        }else{
-                            this.$message.error(response1.data.message);
-                        }
-
-                    });
-                    //回填数据
-                    axios.get("/category/findById?categoryId="+row.categoryId).then((response)=>{
-                        if(response.data.flag){
-                            this.formData=response.data.data;
-                            this.value=[response.data.data.parentCategoryId];
-                        }else{
-                            this.$message.error(response.data.message);
-                        }
-                    });
+                    this.dialogFormVisible4Edit = true;
 
 
                 },
                 //保存修改
-                handleEdit(){
-                    axios.post("/category/update",this.formData).then((response)=>{
+                handleEdit() {
+                    axios.post("/category/update", this.formData).then((response) => {
                         this.$message({
-                            type:response.data.flag?"success":"error",
-                            message:response.data.message
+                            type: response.data.flag ? "success" : "error",
+                            message: response.data.message
                         })
 
-                        this.dialogFormVisible4Edit=false;
+                        this.dialogFormVisible4Edit = false;
                         this.findPage();
+                    })
+                },
+
+                handleDelete(row) {
+                    this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(()=>{
+                        axios.post("/ads/delAds?id=" + row.id).then((response) => {
+                            this.$message({
+                                type: response.data.flag ? "success" : "error",
+                                message: response.data.message
+                            });
+
+                            this.findPage();
+                        })
                     })
                 }
             }

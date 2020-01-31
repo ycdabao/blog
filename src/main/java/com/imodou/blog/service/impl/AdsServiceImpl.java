@@ -52,4 +52,10 @@ public class AdsServiceImpl implements AdsService {
         List<Ads> adsList = adsMapper.selectList(queryWrapper);
         return adsList;
     }
+
+
+    @Override
+    public void delAds(Integer id) {
+        adsMapper.deleteById(id);
+    }
 }

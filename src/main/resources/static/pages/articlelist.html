@@ -75,6 +75,10 @@
             word-wrap: break-word;
         }
 
+        .note-list li.have-img {
+            min-height: 140px;
+        }
+
         li {
             line-height: 20px;
         }
@@ -154,6 +158,22 @@
             color: #b4b4b4;
         }
 
+        .content {
+            padding-right: 165px;
+        }
+        p {
+            display: block;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+        .note-list .abstract {
+            margin: 0 0 8px;
+            font-size: 13px;
+            line-height: 24px;
+            color: #999;
+        }
         .iconfont {
             font-family: iconfont!important;
             font-size: inherit;
@@ -185,6 +205,12 @@
             border: 1px solid #f0f0f0;
         }
 
+
+        *, :after, :before {
+            box-sizing: border-box;
+        }
+
+
     </style>
 </head>
 <body>
@@ -202,7 +228,7 @@
                 <div id="list-container">
                     <ul class="note-list">
                         <li id="note-41080202" data-note-id="41080202" class="have-img" v-for="item in dataList">
-                            <a class="wrap-img" href="/p/6d30aea77cf2" target="_blank" v-if="item.articleCoverPhoto!=null">
+                            <a class="wrap-img" href="/p/6d30aea77cf2" target="_blank" v-if="item.articleCoverPhoto!=null && item.articleCoverPhoto!=''">
 
                                 <img  :src="item.articleCoverPhoto"  class="img-blur-done" alt="120">
                             </a>
@@ -215,7 +241,7 @@
                                 </p>
                                 <div class="meta">
     <span class="jsd-meta">
-      <i class="iconfont ic-paid1"></i> 23.5
+      <i class="iconfont ic-paid1"></i> {{item.articleViews}}
     </span>
                                     <a class="nickname" target="_blank" href="/u/9a4c36f116e3">admin</a>
                                     <a target="_blank" href="/p/e191149e4fa2#comments">
@@ -224,25 +250,6 @@
                                 </div>
                             </div>
                         </li>
-                        <!--li id="note-42175260" data-note-id="42175260" class="have-img" v-for="item in dataList">
-                            <a class="wrap-img" href="/p/6d30aea77cf2" target="_blank">
-
-                                <img  :src="item.articleCoverPhoto"  class="img-blur-done" alt="120">
-                            </a>
-                            <div class="content">
-                                <a class="title" target="_blank" href="/p/6d30aea77cf2">vue的一些基础知识（涉及面试题）</a>
-                                <p class="abstract">
-                                    1、对MVVM开发模式的理解 MVVM分为Model、View、ViewModel三者。 Model 代表数据模型，数据和业务逻辑都在Model...
-                                </p>
-                                <div class="meta">
-        <span class="jsd-meta">
-          <i class="iconfont ic-paid1"></i> 6.9
-        </span>
-                                    <a class="nickname" target="_blank" href="/u/ff23603d69c8">乐天派的普通人</a>
-                                    <span><i class="iconfont ic-list-like"></i> 86</span>
-                                </div>
-                            </div>
-                        </li-->
                     </ul>
 
                 </div>

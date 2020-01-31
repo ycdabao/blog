@@ -64,4 +64,16 @@ public class AdsController {
         }
     }
 
+
+    @PostMapping("delAds")
+    public Result delAds(Integer id){
+        try {
+            adsService.delAds(id);
+            return new Result(true, Message.ADS_DEL_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,Message.ADS_DEL_FAIL);
+        }
+    }
+
 }

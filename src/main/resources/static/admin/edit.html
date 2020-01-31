@@ -8,6 +8,14 @@
     <link rel="stylesheet" href="../resources/plugins/elementui/index.css">
     <link rel="stylesheet" href="../resources/plugins/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="../resources/css/style.css">
+
+    <style>
+        .avatar {
+            width: 178px;
+            height: 178px;
+            display: block;
+        }
+    </style>
     <script>
         function getUrlParam(paraName) {
             var url = document.location.toString();
@@ -48,7 +56,18 @@
     <el-form-item label="摘要" >
         <el-input v-model="formData.articleSummary" style="width: 80%">></el-input>
     </el-form-item>
-    <el-form-item label="正文"> <input type="button" onclick="xx()"/>
+    <el-form-item label="缩略图" >
+        <el-upload
+                class="avatar-uploader"
+                action="/post/uploadCover"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload" >
+            <img v-if="formData.articleCoverPhoto" :src="formData.articleCoverPhoto" class="avatar" >
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+    </el-form-item>
+    <el-form-item label="正文"> <input type="button" onclick="xx()" value="显示正文"/>
         <div id="editor">
             <!-- Tips: Editor.md can auto append a `<textarea>` tag -->
             <textarea style="display:none;" id="content">{{articleContent}}</textarea>
@@ -104,8 +123,6 @@
     }
 
 
-
-
     vue = new Vue({
         el:"#app",
         data:{
@@ -115,6 +132,21 @@
             articleContent:""
         },
         methods:{
+            handleAvatarSuccess(res, file) {
+                this.formData.articleCoverPhoto = res.data;
+            },
+            beforeAvatarUpload(file) {
+                /*       const isJPG = file.type === 'image/jpeg';
+                       const isLt2M = file.size / 1024 / 1024 < 2;
+
+                       if (!isJPG) {
+                           this.$message.error('上传头像图片只能是 JPG 格式!');
+                       }
+                       if (!isLt2M) {
+                           this.$message.error('上传头像图片大小不能超过 2MB!');
+                       }*/
+                return true;
+            },
             findArticle(){
 
 
