@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class AdsServiceImpl implements AdsService {
@@ -38,5 +40,16 @@ public class AdsServiceImpl implements AdsService {
     @Override
     public void addAds(Ads ads) {
         adsMapper.insert(ads);
+    }
+
+
+    @Override
+    public List<Ads> findByPlace(int place) {
+
+
+        QueryWrapper<Ads> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("status",1).eq("place",place);
+        List<Ads> adsList = adsMapper.selectList(queryWrapper);
+        return adsList;
     }
 }

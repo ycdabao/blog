@@ -204,10 +204,10 @@
             <div class="col-lg-3 hidden-xs hidden-md hidden-sm"></div>
             <div class="col-lg-5 " style="background-color: #ffffff;">
                 <div class="block" style="margin-bottom: 50px;border:1px solid red">
-                    <span class="demonstration">默认 Hover 指示器触发</span>
                     <el-carousel height="150px">
-                        <el-carousel-item v-for="item in 4" :key="item">
-                            <h3 class="small">{{ item }}</h3>
+                        <el-carousel-item v-for="item in adsList" >
+                            <img :src="item.imgsrc" class="img-responsive" alt="Responsive image" style="width: 100%\9"/>
+
                         </el-carousel-item>
                     </el-carousel>
                 </div>
@@ -273,7 +273,8 @@
                 total:0,//总记录数
                 article:null//查询条件
             },
-            html:""
+            html:"",
+            adsList:[]  //广告信息
         },
         methods:{
             pageQuery(){
@@ -299,9 +300,15 @@
             },
             getGoodsHref:function(val){
                 return '/pages/article.html?id='+val
+            },
+            getAdsList(){
+               axios.get("/ads/findByPlace?place=1").then((response)=>{
+                   this.adsList=response.data.data;
+               })
             }
         },
         created(){
+            this.getAdsList();
             this.pageQuery();
 
         },

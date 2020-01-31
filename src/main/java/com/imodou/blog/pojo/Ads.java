@@ -14,14 +14,9 @@ public class Ads extends Model<Ads> {
     private Integer type;
     private Integer place;
     private String url;
-    private String imgSrc;
+    private String imgsrc;
     private String alt;
     private String remark;
-    private Integer sort;
-    private Date createTime;
-    private Date updateTime;
-    private Long userid;
-    private int status;
 
     public Integer getId() {
         return id;
@@ -55,12 +50,12 @@ public class Ads extends Model<Ads> {
         this.url = url;
     }
 
-    public String getImgSrc() {
-        return imgSrc;
+    public String getImgsrc() {
+        return imgsrc;
     }
 
-    public void setImgSrc(String imgSrc) {
-        this.imgSrc = imgSrc;
+    public void setImgsrc(String imgsrc) {
+        this.imgsrc = imgsrc;
     }
 
     public String getAlt() {
@@ -87,20 +82,20 @@ public class Ads extends Model<Ads> {
         this.sort = sort;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreatetime() {
+        return createtime;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getUpdatetime() {
+        return updatetime;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
     }
 
     public Long getUserid() {
@@ -118,6 +113,13 @@ public class Ads extends Model<Ads> {
     public void setStatus(int status) {
         this.status = status;
     }
+
+    private Integer sort;
+    private Date createtime;
+    private Date updatetime;
+    private Long userid;
+    private int status;
+
 
 
 
