@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      **/
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/index.html", "/static/pages/**", "/login_p", "/favicon.ico","/resources/**")
+        web.ignoring().antMatchers("/index.html", "/login_p", "/favicon.ico","/resources/**")
                 // 给 swagger 放行；不需要权限能访问的资源
                 .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/images/**", "/webjars/**", "/v2/api-docs", "/configuration/ui", "/configuration/security");
 
@@ -66,8 +66,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         return o;
                     }
                 })
+                .antMatchers("/admin/**").authenticated()
                 .and()
-                .formLogin().loginPage("/login_p").loginProcessingUrl("/login")
+                .formLogin()
+               // .loginPage("/login_p")
+               // .loginProcessingUrl("/login")
                 .usernameParameter("username").passwordParameter("password")
                 .defaultSuccessUrl("/admin/main.html")
                // .failureHandler(new MyAuthenticationFailureHandler())
@@ -80,6 +83,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and().csrf().disable()
                 .headers().frameOptions().sameOrigin()
+
                 ;
               //  .exceptionHandling().accessDeniedHandler(deniedHandler);
     }
