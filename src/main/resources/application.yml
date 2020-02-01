@@ -23,7 +23,7 @@ mybatis-plus:
   type-aliases-package: com.imodou.blog.pojo
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-debug: false
+#debug: true
 server:
   port: 80
   compression:
